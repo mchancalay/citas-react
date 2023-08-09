@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Paciente = ({paciente, setPaciente}) => {
+const Paciente = ({paciente, setPaciente, eliminarPaciente}) => {
 
-  const { nombre, propietario, email, alta, sintomas } = paciente
+  const { id, nombre, propietario, email, alta, sintomas } = paciente
 
   return (
     <div className='bg-white shadow-md rounded p-5 mb-5 mx-5'>
@@ -24,11 +24,11 @@ const Paciente = ({paciente, setPaciente}) => {
       <div className='mt-5 flex gap-2'>
         <button type='button'
                 className='px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded'
-                onClick={() => setPaciente(paciente)}
+                onClick={() =>  setPaciente(paciente)}
         >Editar</button>
         <button type='button' 
                 className='px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded'
-                
+                onClick={() => eliminarPaciente(id)}
         >Eliminar</button>
       </div>
     </div>
