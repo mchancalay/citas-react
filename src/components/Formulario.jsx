@@ -18,9 +18,13 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
       SetPropietario(paciente.propietario)
       setEmail(paciente.email)
       setAlta(paciente.alta)
-      setSintomas(paciente.sintomas)
+      setSintomas(paciente.sintomas) 
     }
   },[paciente])
+
+  const generarId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  }
 
   const handlerSubmit = e => {
     e.preventDefault();
@@ -31,8 +35,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
     } else {
       setErr(false)
 
-      const newPaciente = {
-        id: pacientes.length+1,
+      const objPaciente = {
         nombre,
         propietario,
         email,
@@ -40,15 +43,25 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
         sintomas
       }
 
-      if(paciente.id) {
-        console.log("editing")
-      } else {
-        console.log("espalda")
-      }
-    
-    
+      if(paciente.id){
+        objPaciente.id = paciente.id
+        const pacientesActualizados = pacientes.map(p => p.id === paciente.id ? objPaciente : p)
 
-      setPacientes([...pacientes, newPaciente])
+        /*
+          Codigo que hice previa a la resulucion del video:
+
+          const pacienteIndex = pacientes.findIndex(p => p.id === paciente.id);
+          const nuevosPacientes = [...pacientes];
+          nuevosPacientes[pacienteIndex] = objPaciente;
+        */
+
+        setPacientes(pacientesActualizados)
+        setPaciente({})
+
+      } else {
+        objPaciente.id = generarId()
+        setPacientes([...pacientes, objPaciente])
+      }
 
       setNombre('')
       SetPropietario('')
@@ -128,7 +141,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
 
       
     </div>
-  )
+  ) 
 }
 
 export default Formulario
